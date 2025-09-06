@@ -1,0 +1,19 @@
+import React from 'react'
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+
+function Header() {
+  return (
+    <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
+      <div className="flex items-center gap-2">
+        <Image src={'/logo.svg'} alt="logo" width={30} height={30} />
+        <h1 className="text-base font-bold md:text-2xl">MockVue</h1>
+      </div>
+      <Button className="w-24 transform rounded-lg font-medium text-[#213555]transition-all duration-300 hover:-translate-y-0.5  md:w-32 dark:bg-whitedark:hover:bg-gray-200">
+        Login
+      </Button>
+    </nav>
+    )
+}
+
+export default Header
