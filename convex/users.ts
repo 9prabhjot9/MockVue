@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
 
-//inser update or delete a record use mutation when fetch a recird use query
+//insert update or delete a record use mutation when fetch a record use query
 export const CreateNewUser = mutation ({
     args: {
         name: v.string(),

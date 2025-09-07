@@ -11,7 +11,7 @@ const Provider = ({children}:any) => {
     const {user} = useUser()
     const CreateUser = useMutation(api.users.CreateNewUser)
     const [userDetail, setUserDetail] = useState<any>()
-
+    console.log('user')
     useEffect(()=> {
         user&&CreateNewUser()
     },[user])
