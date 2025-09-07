@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+
 
 function Header() {
   return (
@@ -9,9 +11,12 @@ function Header() {
         <Image src={'/logo.svg'} alt="logo" width={30} height={30} />
         <h1 className="text-base font-bold md:text-2xl">MockVue</h1>
       </div>
-      <Button className="w-24 transform rounded-lg font-medium text-[#213555]transition-all duration-300 hover:-translate-y-0.5  md:w-32 dark:bg-whitedark:hover:bg-gray-200">
-        Login
-      </Button>
+
+      <Link href={'/dashboard'}>
+        <Button className="w-24 transform rounded-lg font-medium text-white transition-all duration-300 hover:-translate-y-0.5  md:w-32 dark:bg-whitedark:hover:bg-gray-200">
+            Login
+        </Button>
+      </Link>
     </nav>
     )
 }

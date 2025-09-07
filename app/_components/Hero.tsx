@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from "motion/react";
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 function Hero() {
   return (
@@ -18,7 +19,7 @@ function Hero() {
         <div className="absolute mx-auto h-px w-40 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
       </div>
       <div className="px-4 py-10 md:py-20">
-        <h1 className="relative z-10 mx-auto max-w-4xl text-center text-2xl font-bold text-slate-700 md:text-4xl lg:text-7xl dark:text-slate-300">
+        <h1 className="relative z-10 mx-auto max-w-4xl text-center text-2xl font-bold text-[#213555] md:text-4xl lg:text-7xl dark:text-slate-300">
           {"Master Job Interviews with AI-Powered Practice Sessions"
             .split(" ")
             .map((word, index) => (
@@ -65,9 +66,11 @@ function Hero() {
           }}
           className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
         >
-          <Button className="w-50 h-12 transform rounded-lg px-6 py-2 font-medium text-[#213555] transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-            Explore Now
-          </Button>
+         <Link href={'/dashboard'}> 
+            <Button className="w-50 h-12 transform rounded-lg px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5  dark:bg-white">
+                Explore Now
+            </Button>
+         </Link>
           <button className="w-50 h-12 transform rounded-lg border border-gray-300 bg-white px-6 py-2 font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 dark:border-gray-700 dark:bg-black dark:text-white dark:hover:bg-gray-900">
             Contact Support
           </button>
