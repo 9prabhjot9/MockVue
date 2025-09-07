@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-
-
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 
 export const metadata: Metadata = {
@@ -24,7 +23,9 @@ export default function RootLayout({
           <body
           className={outfit.className}
           >
-            {children}
+            <ConvexClientProvider>
+              {children}
+            </ConvexClientProvider>
           </body>
         </html>
     </ClerkProvider>
