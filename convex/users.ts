@@ -27,7 +27,8 @@ export const CreateNewUser = mutation ({
             })
             console.log(result)
             return {
-                ...data
+                ...data,
+                result
             }
         }
 
