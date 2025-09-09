@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -15,10 +16,19 @@ import ResumeUpload from "./ResumeUpload";
 import JobDescription from "./JobDescription";
 
 function CreateInterviewDialog() {
+  const [formData, setFormData] = useState<any>();
+
+  const onHadnleInputChange = (field: string, value: string) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   return (
     <div>
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <Button>+ Create</Button>
         </DialogTrigger>
         <DialogContent className="min-w-3xl">
@@ -34,17 +44,17 @@ function CreateInterviewDialog() {
                   <ResumeUpload />
                 </TabsContent>
                 <TabsContent value="job-description">
-                    <JobDescription />
+                  <JobDescription onHandleInputChange={onHadnleInputChange} />
                 </TabsContent>
               </Tabs>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose>
-              <Button variant={'ghost'} >Cacel</Button>
+              <Button variant={"ghost"}>Cacel</Button>
             </DialogClose>
             <DialogClose>
-                <Button>Submit</Button>
+              <Button>Submit</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
