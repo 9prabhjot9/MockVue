@@ -14,15 +14,35 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ResumeUpload from "./ResumeUpload";
 import JobDescription from "./JobDescription";
+import axios from "axios";
 
 function CreateInterviewDialog() {
   const [formData, setFormData] = useState<any>();
-
+  const [file, setFile] = useState<File | null>();
+  const [loading, setLoading] = useState(false);
   const onHadnleInputChange = (field: string, value: string) => {
     setFormData((prev: any) => ({
       ...prev,
       [field]: value,
     }));
+  };
+
+  const onSubmit = async () => {
+    if (!file) return;
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await axios.post(
+        "api/generate-interview-questions",
+        formData
+      );
+      console.log(res.data);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,7 +61,7 @@ function CreateInterviewDialog() {
                   <TabsTrigger value="job-description">Job Title</TabsTrigger>
                 </TabsList>
                 <TabsContent value="resume-upload">
-                  <ResumeUpload />
+                  <ResumeUpload setFiles={(file: File) => setFile(file)} />
                 </TabsContent>
                 <TabsContent value="job-description">
                   <JobDescription onHandleInputChange={onHadnleInputChange} />
@@ -54,7 +74,7 @@ function CreateInterviewDialog() {
               <Button variant={"ghost"}>Cacel</Button>
             </DialogClose>
             <DialogClose>
-              <Button>Submit</Button>
+              <Button onClick={onSubmit} disabled={loading||!file}>Submit</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

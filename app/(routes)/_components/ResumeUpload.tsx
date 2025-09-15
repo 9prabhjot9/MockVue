@@ -4,8 +4,8 @@ import React from 'react'
 import { useState } from 'react';
 import { FileUpload } from "@/components/ui/file-upload";
 
-function ResumeUpload() {
-    const [files, setFiles] = useState<File[]>([]);
+function ResumeUpload({setFiles}:any) {
+    // const [files, setFiles] = useState<File[]>([]);
   const handleFileUpload = (files: File[]) => {
     setFiles(files);
     console.log(files);
