@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -15,11 +15,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ResumeUpload from "./ResumeUpload";
 import JobDescription from "./JobDescription";
 import axios from "axios";
+import { Loader2Icon } from "lucide-react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { UserDetailContext } from "@/context/UserDetailContext";
 
 function CreateInterviewDialog() {
   const [formData, setFormData] = useState<any>();
   const [file, setFile] = useState<File | null>();
   const [loading, setLoading] = useState(false);
+  const {userDetail, setUserDetail} = useContext(UserDetailContext)
+
+  const saveInterviewQuestion = useMutation(api.Interview.SaveInterviewQuestion)
+
   const onHadnleInputChange = (field: string, value: string) => {
     setFormData((prev: any) => ({
       ...prev,
@@ -39,6 +47,14 @@ function CreateInterviewDialog() {
         formData
       );
       console.log(res.data);
+      //Save to Db
+      const resp = await saveInterviewQuestion({
+        questions: res.data?.questions,
+        resumeUrl: res.data?.resumeUrl,
+        uid: userDetail?._id
+      })
+      console.log(resp)
+
     } catch (e) {
       console.log(e);
     } finally {
@@ -74,9 +90,9 @@ function CreateInterviewDialog() {
             <DialogClose>
               <Button variant={"ghost"}>Cacel</Button>
             </DialogClose>
-            <DialogClose>
-              <Button onClick={onSubmit} disabled={loading||!file}>Submit</Button>
-            </DialogClose>
+
+              <Button onClick={onSubmit} disabled={loading||!file}>     { loading && <Loader2Icon className="animate-spin"/>} Submit</Button>
+
           </DialogFooter>
         </DialogContent>
       </Dialog>

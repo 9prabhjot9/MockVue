@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import ImageKit from "imagekit";
+import axios from "axios";
 
 var imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_URL_PUBLIC_KEY!,
@@ -26,7 +27,17 @@ export async function POST(req: NextRequest) {
       isPublished: true,
       useUniqueFileName: true,
     });
-    return NextResponse.json({ url: uploadResponse.url }, { status: 200 });
+
+    const result = await axios.post('http://localhost:5678/webhook/generate-interview-question',{
+        resumeUrl: uploadResponse?.url
+    })
+    console.log(result.data)
+    
+
+    return NextResponse.json({
+        questions: result.data?.content?.parts?.[0]?.text,
+        resumeUrl: uploadResponse?.url
+    });
   } catch (error: any) {
     console.error("Upload error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
