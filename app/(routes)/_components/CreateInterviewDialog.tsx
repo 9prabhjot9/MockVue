@@ -94,7 +94,7 @@ function CreateInterviewDialog() {
               <Button variant={"ghost"}>Cacel</Button>
             </DialogClose>
 
-              <Button onClick={onSubmit} disabled={loading||!file}>     { loading && <Loader2Icon className="animate-spin"/>} Submit</Button>
+              <Button onClick={onSubmit} disabled={loading||!file}> { loading && <Loader2Icon className="animate-spin"/>} Submit</Button>
 
           </DialogFooter>
         </DialogContent>

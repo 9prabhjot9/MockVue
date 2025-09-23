@@ -27,21 +27,18 @@ export async function POST(req: NextRequest) {
         useUniqueFileName: true,
       });
 
-      
-    }else{
       const result = await axios.post(
         "http://localhost:5678/webhook/generate-interview-question",
         {
-          resumeUrl: null,
-          jobTitle: jobTitle,
-          jobDescription: jobDescription
+          resumeUrl: uploadResponse?.url,
         }
       );
-      console.log(result.data);
+      
+      // console.log(result.data);
 
       return NextResponse.json({
         questions: result.data?.content?.parts?.[0]?.text,
-        resumeUrl: null
+        resumeUrl: uploadResponse?.url,
       });
     }
 
