@@ -8,7 +8,7 @@ function JobDescription({ onHandleInputChange }: any) {
       <div>
         <label className="text-black font-medium text-base ">Job Title</label>
         <Input
-          placeholder="Ex Full Stack Developer"
+          placeholder="Full Stack Developer"
           className="text-black"
           onChange={(e) => onHandleInputChange("jobTitle", e.target.value)}
         />

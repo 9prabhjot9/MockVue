@@ -11,7 +11,7 @@ export default defineSchema({
 
     InterviewSessionTable: defineTable({
         interviewQuestions: v.any(),
-        resumeUrl: v.string(),
+        resumeUrl: v.optional(v.string()),
         userId: v.id('UserTable'),
         status: v.string()
     })
