@@ -47,14 +47,16 @@ function CreateInterviewDialog() {
     try {
       const res = await axios.post(
         "api/generate-interview-questions",
-        formData
+        formData_
       );
       console.log(res.data);
       //Save to Db
       const resp = await saveInterviewQuestion({
         questions: res.data?.questions,
         resumeUrl: res.data?.resumeUrl,
-        uid: userDetail?._id
+        uid: userDetail?._id,
+        jobTitle: formData?.jobTitle,
+        jobDescription: formData?.jobDescription
       })
       console.log(resp)
 
@@ -94,7 +96,7 @@ function CreateInterviewDialog() {
               <Button variant={"ghost"}>Cacel</Button>
             </DialogClose>
 
-              <Button onClick={onSubmit} disabled={loading||!file}> { loading && <Loader2Icon className="animate-spin"/>} Submit</Button>
+              <Button onClick={onSubmit} > { loading && <Loader2Icon className="animate-spin"/>} Submit</Button>
 
           </DialogFooter>
         </DialogContent>

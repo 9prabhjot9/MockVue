@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import ImageKit from "imagekit";
 import axios from "axios";
 
+
 var imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_URL_PUBLIC_KEY!,
   privateKey: process.env.IMAGEKIT_URL_PRIVATE_KEY!,
@@ -10,13 +11,14 @@ var imagekit = new ImageKit({
 
 export async function POST(req: NextRequest) {
   try {
-    const formData = await req.formData();
-    const file = formData.get("file") as File;
-    const jobTitle = formData.get("jobTitle") as File;
-    const jobDescription = formData.get("jobDescription") as File;
+    
+      // File upload case
+      const formData = await req.formData();
+      const file = formData.get("file") as File;
 
-    if (file) {
-      console.log("file", formData);
+      
+      if(file){
+
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
@@ -26,25 +28,45 @@ export async function POST(req: NextRequest) {
         isPublished: true,
         useUniqueFileName: true,
       });
-
+    
       const result = await axios.post(
         "http://localhost:5678/webhook/generate-interview-question",
-        {
-          resumeUrl: uploadResponse?.url,
-        }
+        { resumeUrl: uploadResponse?.url }
       );
-      
-      // console.log(result.data);
+
+      console.log(result.data)
 
       return NextResponse.json({
         questions: result.data?.content?.parts?.[0]?.text,
         resumeUrl: uploadResponse?.url,
       });
+    } else {
+      // JSON case
+
+      const jobTitle = formData.get('jobTitle')?.toString() || null;
+      const jobDescription = formData.get('jobDescription')?.toString() || null;
+
+      const result = await axios.post(
+        "http://localhost:5678/webhook/generate-interview-question",
+        {
+          resumeUrl: null,
+          jobTitle: jobTitle,
+          jobDescription: jobDescription,
+        });
+        console.log(result.data)
+
+      return NextResponse.json({
+        questions: result.data?.content?.parts?.[0]?.text,
+        resumeUrl: null,
+        jobTitle,
+        jobDescription
+      });
     }
-
-
-  } catch (error: any) {
+  }
+   catch (error: any) {
     console.error("Upload error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
 }
+
