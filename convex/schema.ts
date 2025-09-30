@@ -15,7 +15,7 @@ export default defineSchema({
         resumeUrl: v.union(v.string(), v.null()),
         userId: v.id('UserTable'),
         status: v.string(),
-        jobTitle: v.union(v.string(), v.null()),
-        JobDescription: v.union(v.string(), v.null()),
+        jobTitle: v.optional(v.union(v.string(), v.null())),
+        JobDescription: v.optional(v.union(v.string(), v.null())),
     })
 })
