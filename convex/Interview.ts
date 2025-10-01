@@ -33,6 +33,6 @@ export const GetInterviewQuestions = query({
         .filter(q => q.eq(q.field('_id'), args.interviewRecordId))
         .collect()
 
-        return result
+        return result[0]
     }
 })
